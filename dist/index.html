@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PERFUME.LK | Ceylon Haute Parfumerie & Luxury 3D Fragrance House</title>
+  <meta name="description" content="Experience Ceylon's finest handcrafted luxury fragrances in interactive 3D. Real-time bottle customizer, wild agarwood oud, sacred blue waterlily, and bespoke engraving.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+  <script type="module" crossorigin src="/assets/index-DcxR-rER.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CzB2NjeT.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="#hero" class="brand-logo" id="brandLogo">
+        <div class="brand-crest">✦</div>
+        <div class="brand-title-wrap">
+          <span class="brand-name">PERFUME.LK</span>
+          <span class="brand-tag">Ceylon Haute Parfumerie</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#studio" class="nav-link">3D Atelier</a></li>
+          <li><a href="#craft" class="nav-link">Craftsmanship</a></li>
+          <li><a href="#odyssey" class="nav-link">Pyramid</a></li>
+          <li><a href="#collection" class="nav-link">Collection</a></li>
+          <li><a href="#discovery" class="nav-link">Discovery Set</a></li>
+          <li><a href="#quiz" class="nav-link">Scent Finder</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Currency Toggle -->
+        <button class="currency-toggle" id="currencyToggle" title="Toggle Currency (LKR / USD)">
+          <span id="currencyLabel">LKR (Rs.)</span>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button class="action-btn-icon" id="soundToggle" title="Toggle Sound">
+          <i data-lucide="volume-2" id="soundIcon"></i>
+        </button>
+
+        <!-- Cart Trigger -->
+        <button class="action-btn-icon" id="cartTrigger" title="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="cart-badge" id="cartCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Luxury Ticker Marquee -->
+  <div class="luxury-ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">✦ 100% PURE CEYLON BOTANICAL EXTRACTS</span>
+      <span class="ticker-item">✦ WILD ADAM'S PEAK AQUILARIA OUD</span>
+      <span class="ticker-item">✦ LIMITED VINTAGE 2026 RESERVE</span>
+      <span class="ticker-item">✦ COPPER STEAM DISTILLATION IN KANDY</span>
+      <span class="ticker-item">✦ BESPOKE 3D MONOGRAM ENGRAVING</span>
+      <span class="ticker-item">✦ FREE INSURED EXPRESS DELIVERY SRI LANKA & WORLDWIDE</span>
+      <!-- Duplicate for seamless infinite loop -->
+      <span class="ticker-item">✦ 100% PURE CEYLON BOTANICAL EXTRACTS</span>
+      <span class="ticker-item">✦ WILD ADAM'S PEAK AQUILARIA OUD</span>
+      <span class="ticker-item">✦ LIMITED VINTAGE 2026 RESERVE</span>
+      <span class="ticker-item">✦ COPPER STEAM DISTILLATION IN KANDY</span>
+      <span class="ticker-item">✦ BESPOKE 3D MONOGRAM ENGRAVING</span>
+      <span class="ticker-item">✦ FREE INSURED EXPRESS DELIVERY SRI LANKA & WORLDWIDE</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>✦</span>
+            <span>Artisanal Botanical Reserve • Est. Colombo</span>
+          </div>
+          <h1 class="hero-title">
+            The Immortal Essence of <span class="text-gradient-gold">Ceylon</span>
+          </h1>
+          <p class="hero-subtitle">
+            Rare wild Adam’s Peak agarwood, royal cinnamon, and sacred lotus distilled into liquid art.
+          </p>
+          <p class="hero-description">
+            Immerse yourself in our premier 3D fragrance studio. Customize your crystal flacon, inspect precious metal finishes, explore internal anatomy, and engrave your personal monogram in real-time.
+          </p>
+
+          <!-- Quick Stats Row -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <span class="hero-stat-value">32%</span>
+              <span class="hero-stat-label">Pure Oil Extrait</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-value">16+ Hrs</span>
+              <span class="hero-stat-label">Enduring Longevity</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-value">24K</span>
+              <span class="hero-stat-label">Gold Leaf Infused</span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#studio" class="btn-luxury-gold" id="heroCustomizerBtn">
+              <i data-lucide="sparkles"></i>
+              <span>Customize 3D Flacon</span>
+            </a>
+            <button class="btn-spritzer" id="heroSpritzerBtn">
+              <i data-lucide="spray-can"></i>
+              <span>Spritz Fragrance Mist</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Visual Showcase / 3D Canvas -->
+        <div class="hero-canvas-wrapper" id="heroVisualWrapper">
+          <div class="hero-view-switch">
+            <button class="hero-switch-btn active" id="heroView3dBtn">
+              <i data-lucide="move-3d"></i>
+              <span>3D Flacon</span>
+            </button>
+            <button class="hero-switch-btn" id="heroViewPhotoBtn">
+              <i data-lucide="image"></i>
+              <span>Haute Photography</span>
+            </button>
+          </div>
+
+          <!-- 3D WebGL Canvas View -->
+          <div class="hero-3d-canvas" id="hero3dCanvas"></div>
+
+          <!-- Haute Photo Showcase -->
+          <div class="hero-photo-showcase" id="heroPhotoShowcase" style="display: none;">
+            <img src="/images/oud-ceylon-noir.jpg" alt="Oud Ceylon Noir Haute Flacon" class="hero-featured-photo" id="heroFeaturedPhoto">
+          </div>
+
+          <div class="canvas-hint-overlay">
+            <i data-lucide="sparkles"></i>
+            <span id="heroCanvasHint">Interactive 360° Studio • Click Spritz for Mist</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D Studio Configurator Section -->
+    <section class="studio-section" id="studio">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Haute Atelier</span>
+          <h2 class="section-title">Bespoke 3D <span class="text-gradient-gold">Flacon Studio</span></h2>
+          <p class="section-subtitle">
+            Sculpt your custom perfume bottle in real-time WebGL. Select hand-crafted extracts, cap finishes, internal anatomy view, and live laser engraving.
+          </p>
+        </div>
+
+        <div class="studio-grid">
+          <!-- 3D Canvas Panel -->
+          <div class="studio-3d-panel">
+            <div class="studio-canvas-container" id="studio3dCanvas"></div>
+            
+            <div class="studio-floating-actions">
+              <button class="studio-tool-btn" id="studioSpritzBtn" title="Test Spray Mist">
+                <i data-lucide="spray-can"></i>
+              </button>
+              <button class="studio-tool-btn" id="studioExplodeBtn" title="Toggle Exploded / Anatomy View">
+                <i data-lucide="layers"></i>
+              </button>
+              <button class="studio-tool-btn" id="studioResetBtn" title="Reset View Angle">
+                <i data-lucide="rotate-ccw"></i>
+              </button>
+              <button class="studio-tool-btn" id="studioSpinBtn" title="Toggle 360 Rotation">
+                <i data-lucide="refresh-cw"></i>
+              </button>
+            </div>
+
+            <div class="canvas-hint-overlay">
+              <i data-lucide="eye"></i>
+              <span id="activeBottleLabel">Oud Ceylon Noir • 24K Gold</span>
+            </div>
+          </div>
+
+          <!-- Studio Customizer Controls Card -->
+          <div class="studio-controls-card">
+            <!-- 1. Blend Selection -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>1. Select Fragrance Extract</span>
+                <span class="control-subtext" id="selectedBlendFamily">Woody & Oriental</span>
+              </label>
+              <div class="blend-selector-grid" id="blendSelectorGrid">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- 2. Cap Material Finish -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>2. Precious Cap Finish</span>
+                <span class="control-subtext" id="selectedCapLabel">24K Brushed Gold</span>
+              </label>
+              <div class="cap-materials-row" id="capMaterialsRow">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- 3. Bottle Size -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>3. Flacon Size</span>
+                <span class="control-subtext">Pure Extrait Concentration</span>
+              </label>
+              <div class="size-selector-row" id="sizeSelectorRow">
+                <div class="size-pill" data-size="50ml">
+                  <div class="size-title">50 ml</div>
+                  <div class="size-sub">Voyage</div>
+                </div>
+                <div class="size-pill active" data-size="100ml">
+                  <div class="size-title">100 ml</div>
+                  <div class="size-sub">Grand Flacon</div>
+                </div>
+                <div class="size-pill" data-size="200ml">
+                  <div class="size-title">200 ml</div>
+                  <div class="size-sub">Decanter</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Custom Laser Engraving -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>4. Laser Monogram & Engraving</span>
+                <span class="control-subtext">Rendered on 3D Glass</span>
+              </label>
+              <div class="engraving-input-wrap">
+                <input 
+                  type="text" 
+                  class="engraving-input" 
+                  id="engravingInput" 
+                  placeholder="Enter Name, Date, or Monogram..."
+                  maxlength="24"
+                  value="OUD CEYLON NOIR"
+                >
+                <span class="engraving-badge">Live 3D</span>
+              </div>
+            </div>
+
+            <!-- Checkout / Add to bag bar -->
+            <div class="studio-checkout-bar">
+              <div class="studio-price-wrap">
+                <span class="studio-price-label">Custom Flacon Total</span>
+                <span class="studio-price-amount" id="studioPriceDisplay">LKR 38,500</span>
+              </div>
+              <button class="btn-luxury-gold" id="addCustomToBagBtn">
+                <i data-lucide="shopping-bag"></i>
+                <span>Add Bespoke Flacon</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Craftsmanship & Distillation Odyssey Section -->
+    <section class="craft-section" id="craft">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Art of Ancient Distillation</span>
+          <h2 class="section-title">From Ceylon Soil to <span class="text-gradient-gold">Crystal Flacon</span></h2>
+          <p class="section-subtitle">
+            Every drop is slow-distilled over months using 400-year-old traditional copper alembics.
+          </p>
+        </div>
+
+        <div class="craft-grid">
+          <div class="craft-card">
+            <span class="craft-step-number">01</span>
+            <div class="craft-icon-wrap">
+              <i data-lucide="tree-pine"></i>
+            </div>
+            <h3 class="craft-title">Wild Forest Foraging</h3>
+            <p class="craft-desc">
+              Ethically wild-harvested agarwood from the mist-covered mountain valleys of Adam's Peak and Nilgala reserves.
+            </p>
+          </div>
+
+          <div class="craft-card">
+            <span class="craft-step-number">02</span>
+            <div class="craft-icon-wrap">
+              <i data-lucide="flame"></i>
+            </div>
+            <h3 class="craft-title">Copper Steam Alembic</h3>
+            <p class="craft-desc">
+              Fractional steam distillation in handcrafted copper vessels in Kandy, capturing pure volatile botanical oils.
+            </p>
+          </div>
+
+          <div class="craft-card">
+            <span class="craft-step-number">03</span>
+            <div class="craft-icon-wrap">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <h3 class="craft-title">32% Extrait Aging</h3>
+            <p class="craft-desc">
+              Matured for 180 days in French oak casks with 24K gold foil infusion to achieve magnetic sillage and 16+ hour longevity.
+            </p>
+          </div>
+
+          <div class="craft-card">
+            <span class="craft-step-number">04</span>
+            <div class="craft-icon-wrap">
+              <i data-lucide="gem"></i>
+            </div>
+            <h3 class="craft-title">Crystal Laser Engraving</h3>
+            <p class="craft-desc">
+              Hand-filled into beveled crystal decanters with precious caps and individually laser-engraved with your monogram in Colombo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scent Odyssey (Fragrance Notes Pyramid) -->
+    <section class="odyssey-section" id="odyssey">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">The Fragrance Pyramid</span>
+          <h2 class="section-title">Anatomy of an <span class="text-gradient-gold">Artisanal Scent</span></h2>
+          <p class="section-subtitle" id="pyramidSubtitle">
+            Deconstructed layers of Ceylon’s wild botanicals in <strong class="text-gold" id="activePyramidFragranceName">Oud Ceylon Noir</strong>.
+          </p>
+        </div>
+
+        <div class="notes-pyramid-container" id="notesPyramidContainer">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Haute Collection Grid -->
+    <section class="collection-section" id="collection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Haute Parfumerie</span>
+          <h2 class="section-title">The Master <span class="text-gradient-gold">Collection</span></h2>
+          <p class="section-subtitle">
+            Explore our limited batch extraits, formulated with sustainable Sri Lankan harvests.
+          </p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="collectionFilterBar">
+          <button class="filter-btn active" data-filter="all">All Masterpieces</button>
+          <button class="filter-btn" data-filter="Woody & Oriental">Woody & Oriental</button>
+          <button class="filter-btn" data-filter="Aquatic & Floral">Aquatic & Floral</button>
+          <button class="filter-btn" data-filter="Spicy & Boozy Leather">Spicy & Boozy</button>
+          <button class="filter-btn" data-filter="Green & Fresh Tea">Highland Tea & Fresh</button>
+          <button class="filter-btn" data-filter="Amber & Incense">Sacred Amber</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIP Discovery Box Section -->
+    <section class="discovery-section" id="discovery">
+      <div class="container">
+        <div class="discovery-banner-card">
+          <div>
+            <div class="discovery-badge">
+              <i data-lucide="crown"></i>
+              <span>Collector's Edition</span>
+            </div>
+            <h2 class="discovery-title">The Ceylon <span class="text-gradient-gold">Discovery Vault</span></h2>
+            <p class="discovery-desc">
+              Experience all 5 signature extracts in our handcrafted lacquered presentation coffret. Includes 5× 5ml atomizers and a Rs. 15,000 voucher redeemable toward any full-sized 100ml flacon.
+            </p>
+            <div class="discovery-vials-row">
+              <span class="discovery-vial-pill">✦ Oud Ceylon Noir</span>
+              <span class="discovery-vial-pill">✦ Nil Manel</span>
+              <span class="discovery-vial-pill">✦ Galle Fort</span>
+              <span class="discovery-vial-pill">✦ Nuwara Eliya</span>
+            </div>
+            <button class="btn-luxury-gold" id="orderDiscoveryBtn">
+              <i data-lucide="gift"></i>
+              <span>Claim Discovery Vault (Rs. 18,500)</span>
+            </button>
+          </div>
+
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 2.5rem; text-align: center; box-shadow: 0 0 35px rgba(212,175,55,0.2);">
+              <i data-lucide="box" style="width: 80px; height: 80px; color: var(--gold-light); margin-bottom: 1rem;"></i>
+              <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #ffffff;">5× 5ml Pure Extraits</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.4rem;">Includes 24K Gold Pocket Atomizer & Scent Guide</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bespoke Scent Finder Quiz Section -->
+    <section class="quiz-section" id="quiz">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Sensory Diagnostic</span>
+          <h2 class="section-title">Discover Your <span class="text-gradient-gold">Signature Scent</span></h2>
+          <p class="section-subtitle">
+            Take our 3-step sensory journey to identify your ideal Ceylon fragrance formulation.
+          </p>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quizProgressFill"></div>
+          </div>
+          <div id="quizQuestionContent">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prestige Connoisseur Reviews Section -->
+    <section class="reviews-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Client Accolades</span>
+          <h2 class="section-title">Loved by <span class="text-gradient-gold">Fragrance Collectors</span></h2>
+          <p class="section-subtitle">
+            Read reflections from connoisseurs and fragrance houses worldwide.
+          </p>
+        </div>
+
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="review-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+            <p class="review-quote">
+              "The Oud Ceylon Noir is utterly transcendent. The wild Adam's Peak agarwood has a depth unlike any Middle Eastern or Cambodian oud I own."
+            </p>
+            <div class="review-author-wrap">
+              <span class="review-author-name">Rashid Al-Maktoum</span>
+              <span class="review-author-loc">Dubai, UAE</span>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+            <p class="review-quote">
+              "Having my name laser-engraved in 3D right on the crystal flacon in real-time made this the most luxurious bespoke gift I've ever ordered."
+            </p>
+            <div class="review-author-wrap">
+              <span class="review-author-name">Ananya Wickramasinghe</span>
+              <span class="review-author-loc">Colombo, Sri Lanka</span>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+            <p class="review-quote">
+              "Nil Manel Elixir feels like dawn over an ancient Anuradhapura lotus lake. Crystalline, dewy, with a silky white musk finish that lasted all day."
+            </p>
+            <div class="review-author-wrap">
+              <span class="review-author-name">Lord Edward Harrington</span>
+              <span class="review-author-loc">London, UK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Luxury Shopping Bag Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3 class="cart-title">Your Fragrance Bag</h3>
+      <button class="cart-close-btn" id="cartCloseBtn">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="cart-free-shipping-bar">
+      <i data-lucide="truck"></i>
+      <span id="shippingNotice">Free Insured Express Delivery across Sri Lanka</span>
+    </div>
+
+    <div class="cart-items-container" id="cartItemsList">
+      <!-- Dynamic cart items -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-promo-row">
+        <input type="text" class="cart-promo-input" id="promoCodeInput" placeholder="Promo code (Try CEYLON10)">
+        <button class="cart-promo-btn" id="applyPromoBtn">Apply</button>
+      </div>
+
+      <div class="cart-total-row">
+        <span class="cart-total-label">Subtotal</span>
+        <span class="cart-total-value" id="cartSubtotalDisplay">Rs. 0</span>
+      </div>
+
+      <button class="btn-luxury-gold" id="checkoutBtn" style="width: 100%;">
+        <i data-lucide="lock"></i>
+        <span>Proceed to Secure Checkout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo">
+            <div class="brand-crest">✦</div>
+            <div class="brand-title-wrap">
+              <span class="brand-name">PERFUME.LK</span>
+              <span class="brand-tag">Ceylon Haute Parfumerie</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            Sri Lanka’s premier luxury perfume house. Dedicated to preserving ancient Sri Lankan distillation heritage through modern 3D bespoke perfumery.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Atelier</h4>
+          <ul class="footer-links">
+            <li><a href="#studio">3D Customizer</a></li>
+            <li><a href="#craft">Craftsmanship</a></li>
+            <li><a href="#odyssey">Fragrance Pyramid</a></li>
+            <li><a href="#collection">Haute Collection</a></li>
+            <li><a href="#discovery">Discovery Vault</a></li>
+            <li><a href="#quiz">Scent Matcher</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Heritage</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Wild Adam's Peak Oud</a></li>
+            <li><a href="#hero">Ceylon Cinnamon Distillation</a></li>
+            <li><a href="#hero">Sacred Blue Waterlily</a></li>
+            <li><a href="#hero">Sustainability Charter</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Private Concierge</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+            Subscribe to receive private invitations to limited vintage batch releases.
+          </p>
+          <form class="footer-newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); window.showToast('Thank you for joining the Private Reserve list.');">
+            <input type="email" class="footer-input" placeholder="Enter your email" required>
+            <button type="submit" class="btn-luxury-gold" style="padding: 0.75rem 1.4rem;">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PERFUME.LK. All Rights Reserved. Handcrafted in Sri Lanka • Nipun Sudusinghe</span>
+        <span>Secured with 256-Bit Encryption • Express Nationwide & Global Delivery</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
