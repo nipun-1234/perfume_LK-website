@@ -9,7 +9,6 @@ export class PerfumeScene {
     this.width = this.container.clientWidth || (window.innerWidth > 1024 ? 620 : Math.max(320, window.innerWidth - 40));
     this.height = this.container.clientHeight || 640;
 
-    // Mouse / Parallax state
     this.mouseX = 0;
     this.mouseY = 0;
     this.targetRotationX = 0;
@@ -17,14 +16,13 @@ export class PerfumeScene {
     this.isDragging = false;
     this.previousMousePosition = { x: 0, y: 0 };
     this.autoRotate = true;
-    this.autoRotateSpeed = 0.0035;
+    this.autoRotateSpeed = 0.004;
 
     this.clock = new THREE.Clock();
 
     this.initScene();
     this.initCamera();
     this.initRenderer();
-    this.initEnvironment();
     this.initLighting();
     this.initBottle();
     this.initMistSystem();
@@ -33,14 +31,51 @@ export class PerfumeScene {
 
     setTimeout(() => {
       this.onResize();
-    }, 100);
+    }, 150);
 
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
   }
 
+  createStudioEnvironment() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+
+    // Studio ambiance gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, 256);
+    bgGrad.addColorStop(0, '#242432');
+    bgGrad.addColorStop(0.5, '#121218');
+    bgGrad.addColorStop(1, '#08080c');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, 512, 256);
+
+    // Warm Key Softbox Light reflection
+    const softbox = ctx.createRadialGradient(160, 90, 0, 160, 90, 130);
+    softbox.addColorStop(0, 'rgba(255, 250, 240, 0.95)');
+    softbox.addColorStop(0.35, 'rgba(245, 215, 140, 0.65)');
+    softbox.addColorStop(1, 'rgba(36, 36, 50, 0)');
+    ctx.fillStyle = softbox;
+    ctx.fillRect(0, 0, 512, 256);
+
+    // Gold Rim Strip reflection
+    const rimGrad = ctx.createLinearGradient(340, 0, 430, 0);
+    rimGrad.addColorStop(0, 'rgba(212, 175, 55, 0)');
+    rimGrad.addColorStop(0.5, 'rgba(245, 208, 97, 0.9)');
+    rimGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+    ctx.fillStyle = rimGrad;
+    ctx.fillRect(340, 10, 90, 236);
+
+    const envTex = new THREE.CanvasTexture(canvas);
+    envTex.mapping = THREE.EquirectangularReflectionMapping;
+    envTex.needsUpdate = true;
+    return envTex;
+  }
+
   initScene() {
     this.scene = new THREE.Scene();
+    this.scene.environment = this.createStudioEnvironment();
   }
 
   initCamera() {
@@ -59,94 +94,56 @@ export class PerfumeScene {
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.3;
+    this.renderer.toneMappingExposure = 1.4;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     this.container.appendChild(this.renderer.domElement);
   }
 
-  initEnvironment() {
-    try {
-      const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
-      pmremGenerator.compileEquirectangularShader();
-
-      // Create procedural studio HDR reflection environment
-      const envCanvas = document.createElement('canvas');
-      envCanvas.width = 512;
-      envCanvas.height = 256;
-      const ctx = envCanvas.getContext('2d');
-
-      // Studio background gradient
-      const grad = ctx.createLinearGradient(0, 0, 0, 256);
-      grad.addColorStop(0, '#2d2212');
-      grad.addColorStop(0.5, '#0e0e14');
-      grad.addColorStop(1, '#050508');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 512, 256);
-
-      // Top softbox light
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-      ctx.beginPath();
-      ctx.ellipse(256, 50, 140, 45, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Left warm gold rim light
-      ctx.fillStyle = 'rgba(245, 208, 97, 0.85)';
-      ctx.beginPath();
-      ctx.ellipse(90, 128, 45, 95, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Right cool rim light
-      ctx.fillStyle = 'rgba(210, 230, 255, 0.85)';
-      ctx.beginPath();
-      ctx.ellipse(420, 128, 45, 95, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      const envTexture = new THREE.CanvasTexture(envCanvas);
-      envTexture.mapping = THREE.EquirectangularReflectionMapping;
-      const renderTarget = pmremGenerator.fromEquirectangular(envTexture);
-      this.scene.environment = renderTarget.texture;
-    } catch (e) {
-      console.warn('Environment map init fallback:', e);
-    }
-  }
-
   initLighting() {
-    // 1. Ambient Light
-    const ambientLight = new THREE.AmbientLight(0xfff7ee, 0.8);
+    // 1. Hemisphere light for rich natural studio ambiance
+    const hemiLight = new THREE.HemisphereLight(0xfffaed, 0x1a1a24, 1.2);
+    this.scene.add(hemiLight);
+
+    // 2. Ambient light
+    const ambientLight = new THREE.AmbientLight(0xfff5ea, 0.9);
     this.scene.add(ambientLight);
 
-    // 2. Key Golden Sunlight
-    this.keyLight = new THREE.DirectionalLight(0xfffaed, 3.2);
+    // 3. Key Main Golden Sunlight
+    this.keyLight = new THREE.DirectionalLight(0xfffaed, 3.5);
     this.keyLight.position.set(4.5, 6.5, 5);
     this.keyLight.castShadow = true;
     this.keyLight.shadow.mapSize.width = 1024;
     this.keyLight.shadow.mapSize.height = 1024;
     this.scene.add(this.keyLight);
 
-    // 3. Rim / Edge Light
-    this.rimLight = new THREE.DirectionalLight(0xd4af37, 2.8);
-    this.rimLight.position.set(-5, 4.5, -4);
+    // 4. Gold Rim Light
+    this.rimLight = new THREE.DirectionalLight(0xd4af37, 3.2);
+    this.rimLight.position.set(-5, 4.5, -3);
     this.scene.add(this.rimLight);
 
-    // 4. Fill Point Light for warm liquid underglow
-    this.fillLight = new THREE.PointLight(0xf59e0b, 2.5, 12);
-    this.fillLight.position.set(0, 0.6, 2.6);
+    // 5. Back Rim Light for crystal facet brilliance
+    this.backLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    this.backLight.position.set(0, 5, -4.5);
+    this.scene.add(this.backLight);
+
+    // 6. Fill Light for liquid illumination
+    this.fillLight = new THREE.PointLight(0xf59e0b, 3.2, 12);
+    this.fillLight.position.set(0, 1.0, 2.2);
     this.scene.add(this.fillLight);
 
-    // 5. Crown Sparkle Point Light
-    this.topLight = new THREE.PointLight(0xffffff, 2.2, 9);
+    // 7. Crown Sparkle Light
+    this.topLight = new THREE.PointLight(0xffffff, 2.5, 9);
     this.topLight.position.set(0, 4.8, 0.6);
     this.scene.add(this.topLight);
 
     // Luxury Circular Mirror Podium
     const podiumGeo = new THREE.CylinderGeometry(2.5, 2.7, 0.16, 64);
     const podiumMat = new THREE.MeshStandardMaterial({
-      color: 0x121218,
-      metalness: 0.92,
-      roughness: 0.15,
-      envMapIntensity: 1.6
+      color: 0x15151e,
+      metalness: 0.85,
+      roughness: 0.25
     });
     this.podium = new THREE.Mesh(podiumGeo, podiumMat);
     this.podium.position.y = -0.08;
@@ -156,9 +153,8 @@ export class PerfumeScene {
     const ringGeo = new THREE.TorusGeometry(2.52, 0.035, 16, 64);
     const ringMat = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
-      metalness: 0.96,
-      roughness: 0.18,
-      envMapIntensity: 2.0
+      metalness: 0.95,
+      roughness: 0.2
     });
     this.ringMesh = new THREE.Mesh(ringGeo, ringMat);
     this.ringMesh.position.y = -0.01;
@@ -201,7 +197,7 @@ export class PerfumeScene {
       color: 0xd4af37,
       size: 0.045,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.75,
       blending: THREE.AdditiveBlending
     });
 

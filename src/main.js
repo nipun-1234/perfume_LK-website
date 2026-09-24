@@ -1,8 +1,22 @@
-import * as lucide from 'lucide';
+import { createIcons, icons } from 'lucide';
 import confetti from 'canvas-confetti';
 import { FRAGRANCES, CAP_MATERIALS, BOTTLE_SIZES, SCENT_QUIZ_QUESTIONS } from './data/fragrances.js';
 import { PerfumeScene } from './three/PerfumeScene.js';
 import { luxuryAudio } from './utils/audio.js';
+
+// Safe Lucide Icon Renderer
+function renderIcons(options = {}) {
+  try {
+    createIcons({
+      icons,
+      nameAttr: 'data-lucide',
+      attrs: { class: 'lucide-icon' },
+      ...options
+    });
+  } catch (err) {
+    console.warn('Lucide icon rendering notice:', err);
+  }
+}
 
 // Application State
 const state = {
@@ -44,7 +58,7 @@ window.showToast = function(message, icon = 'sparkles') {
     <span style="font-size: 0.88rem; font-weight: 500;">${message}</span>
   `;
   container.appendChild(toast);
-  lucide.createIcons({ root: toast });
+  renderIcons({ root: toast });
 
   setTimeout(() => {
     toast.style.opacity = '0';
@@ -150,7 +164,30 @@ function selectFragrance(fragrance) {
   if (labelBadge) labelBadge.textContent = `${fragrance.name} • ${state.selectedCap.name}`;
 
   const heroPhoto = document.getElementById('heroFeaturedPhoto');
-  if (heroPhoto) heroPhoto.src = fragrance.image;
+  if (heroPhoto) {
+    heroPhoto.style.opacity = '0.4';
+    heroPhoto.src = fragrance.image;
+    heroPhoto.alt = `${fragrance.name} Haute Flacon`;
+    setTimeout(() => {
+      heroPhoto.style.opacity = '1';
+    }, 100);
+  }
+
+  const heroGlow = document.getElementById('heroPhotoGlow');
+  if (heroGlow) {
+    heroGlow.style.background = fragrance.colorScheme.ambientGlow;
+  }
+
+  const heroBadgeText = document.getElementById('heroPhotoBadgeText');
+  if (heroBadgeText) {
+    heroBadgeText.textContent = `${fragrance.badge} • ${fragrance.concentration}`;
+  }
+
+  const hint = document.getElementById('heroCanvasHint');
+  const btnPhoto = document.getElementById('heroViewPhotoBtn');
+  if (hint && btnPhoto && btnPhoto.classList.contains('active')) {
+    hint.textContent = `Haute Photography • ${fragrance.name}`;
+  }
 
   if (heroScene) heroScene.setFragrance(fragrance);
   if (studioScene) studioScene.setFragrance(fragrance);
@@ -287,30 +324,57 @@ function renderNotesPyramid() {
     }
   ];
 
-  container.innerHTML = tiers.map(t => `
-    <div class="pyramid-tier">
-      <div class="tier-header">
-        <div class="tier-title-wrap">
-          <span class="tier-badge">${t.badge}</span>
-          <h3 class="tier-title">${t.tier}</h3>
+  container.innerHTML = `
+    <div class="odyssey-layout">
+      <!-- Active Bottle Showcase Card -->
+      <div class="pyramid-bottle-showcase">
+        <span class="product-card-badge">${f.badge}</span>
+        <div class="bottle-glow-disc" style="background: ${f.colorScheme.ambientGlow}; width: 220px; height: 220px;"></div>
+        <img src="${f.image}" alt="${f.name}" class="pyramid-bottle-img" loading="lazy" onerror="this.src='/images/${f.id}.jpg'">
+        <div style="margin-top: 0.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: #ffffff;">${f.name}</h3>
+          <p style="font-size: 0.78rem; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 0.2rem;">${f.family}</p>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.6rem; max-width: 270px; line-height: 1.5;">${f.description}</p>
         </div>
-        <span class="tier-duration">${t.desc}</span>
+        <button class="btn-luxury-gold" id="pyramidExploreBtn" style="padding: 0.75rem 1.4rem; font-size: 0.8rem; margin-top: 0.6rem; width: 100%;">
+          <i data-lucide="sparkles"></i>
+          <span>Customize in 3D Atelier</span>
+        </button>
       </div>
-      <div class="notes-grid">
-        ${t.notes.map(n => `
-          <div class="note-item-card">
-            <div class="note-item-icon">
-              <i data-lucide="${n.icon || 'sparkles'}"></i>
+
+      <!-- Notes Tiers -->
+      <div class="pyramid-tiers-wrapper">
+        ${tiers.map(t => `
+          <div class="pyramid-tier">
+            <div class="tier-header">
+              <div class="tier-title-wrap">
+                <span class="tier-badge">${t.badge}</span>
+                <h3 class="tier-title">${t.tier}</h3>
+              </div>
+              <span class="tier-duration">${t.desc}</span>
             </div>
-            <h4 class="note-item-name">${n.name}</h4>
-            <p class="note-item-desc">${n.desc}</p>
+            <div class="notes-grid">
+              ${t.notes.map(n => `
+                <div class="note-item-card">
+                  <div class="note-item-icon">
+                    <i data-lucide="${n.icon || 'sparkles'}"></i>
+                  </div>
+                  <h4 class="note-item-name">${n.name}</h4>
+                  <p class="note-item-desc">${n.desc}</p>
+                </div>
+              `).join('')}
+            </div>
           </div>
         `).join('')}
       </div>
     </div>
-  `).join('');
+  `;
 
-  lucide.createIcons({ root: container });
+  renderIcons({ root: container });
+
+  document.getElementById('pyramidExploreBtn')?.addEventListener('click', () => {
+    document.getElementById('studio')?.scrollIntoView({ behavior: 'smooth' });
+  });
 }
 
 // Render Haute Collection Grid
@@ -330,7 +394,7 @@ function renderCollection(filter = 'all') {
         
         <div class="product-visual-box">
           <div class="bottle-glow-disc" style="background: ${f.colorScheme.ambientGlow};"></div>
-          <img src="${f.image}" alt="${f.name}" class="product-card-img" loading="lazy">
+          <img src="${f.image}" alt="${f.name}" class="product-card-img" loading="lazy" onerror="this.src='/images/${f.id}.jpg'">
         </div>
 
         <div class="product-card-info">
@@ -363,7 +427,7 @@ function renderCollection(filter = 'all') {
     `;
   }).join('');
 
-  lucide.createIcons({ root: grid });
+  renderIcons({ root: grid });
 
   grid.querySelectorAll('.add-to-bag-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -467,7 +531,7 @@ function renderQuiz() {
       </div>
     `;
 
-    lucide.createIcons({ root: container });
+    renderIcons({ root: container });
 
     document.getElementById('quizLoad3dBtn')?.addEventListener('click', () => {
       selectFragrance(match);
@@ -502,7 +566,7 @@ function renderQuiz() {
     </div>
   `;
 
-  lucide.createIcons({ root: container });
+  renderIcons({ root: container });
 
   container.querySelectorAll('.quiz-opt-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -570,7 +634,7 @@ function updateCartUI() {
       </div>
     `;
     if (subtotalEl) subtotalEl.textContent = formatPrice(0, 0);
-    lucide.createIcons({ root: list });
+    renderIcons({ root: list });
     return;
   }
 
@@ -601,7 +665,7 @@ function updateCartUI() {
     `;
   }).join('');
 
-  lucide.createIcons({ root: list });
+  renderIcons({ root: list });
 
   const discountedLKR = Math.round(totalLKR * state.discountMultiplier);
   const discountedUSD = Math.round(totalUSD * state.discountMultiplier);
@@ -700,6 +764,7 @@ function setupDiscoveryVault() {
       cartItemId: 'discovery-vault-coffret',
       fragranceId: 'vault',
       name: 'The Ceylon Discovery Vault (5× 5ml Extraits)',
+      image: '/images/ceylon-discovery-vault.jpg',
       sizeLabel: '5× 5ml Coffret Presentation',
       capName: '24K Gold Pocket Atomizers',
       engraving: 'ROYAL DISCOVERY SET',
@@ -757,7 +822,7 @@ function setupSoundToggle() {
     const isEnabled = luxuryAudio.toggle();
     state.soundOn = isEnabled;
     icon.setAttribute('data-lucide', isEnabled ? 'volume-2' : 'volume-x');
-    lucide.createIcons({ root: btn });
+    renderIcons({ root: btn });
     window.showToast(isEnabled ? 'Sound Feedback Enabled' : 'Sound Muted', isEnabled ? 'volume-2' : 'volume-x');
   });
 }
@@ -810,7 +875,7 @@ function setupNavigation() {
 
 // DOM Content Loaded / Boot
 document.addEventListener('DOMContentLoaded', () => {
-  lucide.createIcons();
+  renderIcons();
   init3DScenes();
   renderStudioBlends();
   renderCapMaterials();

@@ -6,8 +6,8 @@
   <title>PERFUME.LK | Ceylon Haute Parfumerie & Luxury 3D Fragrance House</title>
   <meta name="description" content="Experience Ceylon's finest handcrafted luxury fragrances in interactive 3D. Real-time bottle customizer, wild agarwood oud, sacred blue waterlily, and bespoke engraving.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
-  <script type="module" crossorigin src="/assets/index-DcxR-rER.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CzB2NjeT.css">
+  <script type="module" crossorigin src="/assets/index-BOkdwITK.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CdwG31v6.css">
 </head>
 <body>
 
@@ -124,27 +124,32 @@
         <!-- Hero Visual Showcase / 3D Canvas -->
         <div class="hero-canvas-wrapper" id="heroVisualWrapper">
           <div class="hero-view-switch">
-            <button class="hero-switch-btn active" id="heroView3dBtn">
-              <i data-lucide="move-3d"></i>
-              <span>3D Flacon</span>
-            </button>
-            <button class="hero-switch-btn" id="heroViewPhotoBtn">
+            <button class="hero-switch-btn active" id="heroViewPhotoBtn">
               <i data-lucide="image"></i>
               <span>Haute Photography</span>
             </button>
+            <button class="hero-switch-btn" id="heroView3dBtn">
+              <i data-lucide="move-3d"></i>
+              <span>3D Atelier Studio</span>
+            </button>
+          </div>
+
+          <!-- Haute Photo Showcase (High-definition luxury flacon photography) -->
+          <div class="hero-photo-showcase" id="heroPhotoShowcase">
+            <div class="hero-photo-glow" id="heroPhotoGlow" style="background: rgba(212, 175, 55, 0.45);"></div>
+            <img src="/images/oud-ceylon-noir.jpg" alt="Oud Ceylon Noir Haute Flacon" class="hero-featured-photo" id="heroFeaturedPhoto">
+            <div class="hero-photo-overlay-badge" id="heroPhotoBadge">
+              <span class="badge-dot"></span>
+              <span id="heroPhotoBadgeText">Signature Extract • Extrait de Parfum (32% Oil)</span>
+            </div>
           </div>
 
           <!-- 3D WebGL Canvas View -->
-          <div class="hero-3d-canvas" id="hero3dCanvas"></div>
-
-          <!-- Haute Photo Showcase -->
-          <div class="hero-photo-showcase" id="heroPhotoShowcase" style="display: none;">
-            <img src="/images/oud-ceylon-noir.jpg" alt="Oud Ceylon Noir Haute Flacon" class="hero-featured-photo" id="heroFeaturedPhoto">
-          </div>
+          <div class="hero-3d-canvas" id="hero3dCanvas" style="display: none;"></div>
 
           <div class="canvas-hint-overlay">
             <i data-lucide="sparkles"></i>
-            <span id="heroCanvasHint">Interactive 360° Studio • Click Spritz for Mist</span>
+            <span id="heroCanvasHint">Haute Photography • Oud Ceylon Noir</span>
           </div>
         </div>
       </div>
@@ -397,11 +402,14 @@
             </button>
           </div>
 
-          <div style="display: flex; justify-content: center; align-items: center;">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 2.5rem; text-align: center; box-shadow: 0 0 35px rgba(212,175,55,0.2);">
-              <i data-lucide="box" style="width: 80px; height: 80px; color: var(--gold-light); margin-bottom: 1rem;"></i>
-              <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #ffffff;">5× 5ml Pure Extraits</h4>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.4rem;">Includes 24K Gold Pocket Atomizer & Scent Guide</p>
+          <div class="discovery-image-container">
+            <div class="discovery-image-wrapper">
+              <div class="bottle-glow-disc" style="background: rgba(212, 175, 55, 0.4); width: 260px; height: 260px;"></div>
+              <img src="/images/ceylon-discovery-vault.jpg" alt="The Ceylon Discovery Vault Presentation Coffret" class="discovery-coffret-img">
+              <div class="discovery-img-tag">
+                <i data-lucide="sparkles"></i>
+                <span>Includes 5× 5ml Pure Extraits & 24K Gold Pocket Atomizer</span>
+              </div>
             </div>
           </div>
         </div>

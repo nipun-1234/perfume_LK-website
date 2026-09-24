@@ -24,43 +24,45 @@ export class BottleModel {
   }
 
   initMaterials() {
-    // Ultra-High Index Crystal Glass Material (Sparkling reflections + transparency)
+    // Ultra-High Index Crystal Glass Material with depthWrite false
     this.glassMaterial = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0.40,
       roughness: 0.05,
-      metalness: 0.05,
-      reflectivity: 0.98,
+      metalness: 0.1,
+      reflectivity: 0.95,
       clearcoat: 1.0,
-      clearcoatRoughness: 0.02,
-      envMapIntensity: 2.8
+      clearcoatRoughness: 0.03,
+      depthWrite: false,
+      side: THREE.DoubleSide
     });
 
     // Fragrance Liquid Core Material (Vibrant glowing liquid)
     this.liquidMaterial = new THREE.MeshStandardMaterial({
       color: 0xc67d26,
-      emissive: 0x3d1f05,
-      emissiveIntensity: 0.5,
-      roughness: 0.12,
+      emissive: 0x663300,
+      emissiveIntensity: 0.7,
+      roughness: 0.06,
       metalness: 0.15,
-      transparent: true,
-      opacity: 0.96
+      transparent: false,
+      opacity: 1.0,
+      depthWrite: true
     });
 
     // Cap / Metallic Collar Material (24K Gold default)
     this.capMaterial = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
       metalness: 0.96,
-      roughness: 0.20,
-      envMapIntensity: 2.0
+      roughness: 0.18,
+      envMapIntensity: 2.2
     });
 
     this.collarMaterial = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
       metalness: 0.96,
-      roughness: 0.16,
-      envMapIntensity: 2.2
+      roughness: 0.14,
+      envMapIntensity: 2.4
     });
 
     // Dip Tube Material
@@ -68,29 +70,32 @@ export class BottleModel {
       color: 0xffffff,
       transparent: true,
       opacity: 0.45,
-      roughness: 0.1,
-      metalness: 0.1
+      roughness: 0.08,
+      metalness: 0.1,
+      depthWrite: false
     });
 
     // Label Front Material
     this.labelMaterial = new THREE.MeshStandardMaterial({
       map: this.labelTexture,
       transparent: true,
-      roughness: 0.35,
-      metalness: 0.25,
+      roughness: 0.30,
+      metalness: 0.30,
+      depthWrite: false,
       polygonOffset: true,
-      polygonOffsetFactor: -1,
-      polygonOffsetUnits: -1
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2
     });
 
     // 24K Gold Flake Material
     this.goldFlakeMaterial = new THREE.MeshStandardMaterial({
       color: 0xffdf78,
       metalness: 0.98,
-      roughness: 0.1,
-      emissive: 0x855f0d,
-      emissiveIntensity: 0.3,
-      side: THREE.DoubleSide
+      roughness: 0.08,
+      emissive: 0x996600,
+      emissiveIntensity: 0.4,
+      side: THREE.DoubleSide,
+      depthWrite: false
     });
   }
 
@@ -224,6 +229,17 @@ export class BottleModel {
     this.labelMesh = new THREE.Mesh(labelPlaneGeo, this.labelMaterial);
     this.labelMesh.position.set(0, 1.05, 0.60);
     this.group.add(this.labelMesh);
+
+    // Set precise render order to ensure proper transparency sorting
+    this.liquidMesh.renderOrder = 1;
+    this.tubeMesh.renderOrder = 3;
+    this.labelMesh.renderOrder = 4;
+    this.outerMesh.renderOrder = 5;
+    this.baseMesh.renderOrder = 5;
+    this.neckMesh.renderOrder = 5;
+    this.collarMesh.renderOrder = 5;
+    this.nozzleMesh.renderOrder = 5;
+    this.capGroup.renderOrder = 6;
   }
 
   initGoldFlakes() {
