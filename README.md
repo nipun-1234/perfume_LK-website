@@ -166,7 +166,8 @@ npm run build
 
 ## 📜 License
 
-This project is proprietary to Nipun Sudusinghe. All rights reserved.
+This project is proprietary to Perfume.lk. All rights reserved.
+Developed By Nipun Sudusinghe.
 
 ---
 
