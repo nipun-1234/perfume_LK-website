@@ -1341,34 +1341,114 @@ body {
 
 .review-card {
   background: var(--bg-card);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--gold-border);
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  padding: 2.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  transition: var(--transition-smooth);
+  gap: 1.35rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .review-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--gold-light);
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 28px rgba(212, 175, 55, 0.18);
+}
+
+.review-card:hover::before {
+  opacity: 1;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .review-stars {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   gap: 0.3rem;
+  color: #F5D061;
+}
+
+.review-stars svg,
+.review-stars .lucide-icon,
+.review-stars [data-lucide="star"],
+.review-stars polygon {
+  width: 17px;
+  height: 17px;
+  fill: #F5D061 !important;
+  stroke: #D4AF37 !important;
+  filter: drop-shadow(0 0 5px rgba(245, 208, 97, 0.45));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.review-stars svg:hover,
+.review-stars .lucide-icon:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(245, 208, 97, 0.75));
+}
+
+.review-score {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-left: 0.35rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0.04em;
+}
+
+.review-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.review-verified-badge svg,
+.review-verified-badge .lucide-icon {
+  width: 13px;
+  height: 13px;
+  stroke: var(--gold-light);
   color: var(--gold-light);
 }
 
 .review-quote {
   font-family: var(--font-editorial);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-style: italic;
-  color: #ffffff;
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.65;
+  margin: 0;
 }
 
 .review-author-wrap {
@@ -1376,19 +1456,86 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 1.2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.8rem;
+}
+
+.review-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(15, 15, 22, 0.95));
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-light);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.review-card:hover .review-avatar {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
+  transform: scale(1.06);
+}
+
+.review-avatar svg,
+.review-avatar .lucide-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--gold-light);
+  color: var(--gold-light);
+}
+
+.review-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
 }
 
 .review-author-name {
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
 }
 
 .review-author-loc {
   font-size: 0.75rem;
   color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.review-author-loc svg,
+.review-author-loc .lucide-icon {
+  width: 12px;
+  height: 12px;
+  stroke: var(--gold-light);
+  opacity: 0.8;
+}
+
+.review-product-tag {
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  align-self: center;
 }
 
 /* Haute Collection Grid */
