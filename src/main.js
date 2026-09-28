@@ -623,6 +623,14 @@ function updateCartUI() {
   const totalCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
   if (badge) badge.textContent = totalCount;
 
+  const trigger = document.getElementById('cartTrigger');
+  if (trigger) {
+    trigger.classList.remove('bump');
+    void trigger.offsetWidth;
+    trigger.classList.add('bump');
+    setTimeout(() => trigger.classList.remove('bump'), 800);
+  }
+
   if (!list) return;
 
   if (state.cart.length === 0) {
@@ -795,35 +803,36 @@ function setupStudioAddToCart() {
   });
 }
 
-// Currency Switcher
+// Currency Switcher HUD
 function setupCurrencyToggle() {
   const btn = document.getElementById('currencyToggle');
+  const flag = document.getElementById('currencyFlag');
   const label = document.getElementById('currencyLabel');
   if (!btn) return;
 
   btn.addEventListener('click', () => {
     state.currency = state.currency === 'LKR' ? 'USD' : 'LKR';
     if (label) label.textContent = state.currency === 'LKR' ? 'LKR (Rs.)' : 'USD ($)';
+    if (flag) flag.textContent = state.currency === 'LKR' ? '🇱🇰' : '🌐';
     updateStudioPrice();
     renderCollection();
     updateCartUI();
     luxuryAudio.playClick();
-    window.showToast(`Currency switched to ${state.currency}`, 'dollar-sign');
+    window.showToast(`✦ Currency switched to ${state.currency}`, 'coins');
   });
 }
 
-// Audio Sound Mute Toggle
+// Audio Sound Mute Toggle with Dynamic Equalizer HUD
 function setupSoundToggle() {
   const btn = document.getElementById('soundToggle');
-  const icon = document.getElementById('soundIcon');
   if (!btn) return;
 
   btn.addEventListener('click', () => {
     const isEnabled = luxuryAudio.toggle();
     state.soundOn = isEnabled;
-    icon.setAttribute('data-lucide', isEnabled ? 'volume-2' : 'volume-x');
-    renderIcons({ root: btn });
-    window.showToast(isEnabled ? 'Sound Feedback Enabled' : 'Sound Muted', isEnabled ? 'volume-2' : 'volume-x');
+    btn.classList.toggle('muted', !isEnabled);
+    luxuryAudio.playClick();
+    window.showToast(isEnabled ? '✦ Atmospheric Sound Feedback Active' : '✦ Audio Muted', isEnabled ? 'volume-2' : 'volume-x');
   });
 }
 
@@ -858,18 +867,153 @@ function setupCheckout() {
   });
 }
 
-// Navigation links scroll spy & active state
+// Revolutionary Magnetic Liquid Island Navigation & Scroll Spying
 function setupNavigation() {
+  const navCapsule = document.getElementById('navCapsule');
+  const indicator = document.getElementById('navIndicatorPill');
   const links = document.querySelectorAll('.nav-link');
+  const laserBar = document.getElementById('headerScrollProgress');
+  const siteHeader = document.getElementById('siteHeader');
+
+  // Magnetic liquid indicator mover
+  const moveIndicator = (targetLink) => {
+    if (!indicator || !targetLink || !navCapsule) return;
+    const capsuleRect = navCapsule.getBoundingClientRect();
+    const linkRect = targetLink.getBoundingClientRect();
+    
+    indicator.style.left = `${linkRect.left - capsuleRect.left}px`;
+    indicator.style.top = `${linkRect.top - capsuleRect.top}px`;
+    indicator.style.width = `${linkRect.width}px`;
+    indicator.style.height = `${linkRect.height}px`;
+    indicator.classList.add('active');
+  };
+
+  const getActiveLink = () => document.querySelector('.nav-link.active') || links[0];
+
+  // Initial indicator positioning
+  setTimeout(() => {
+    const active = getActiveLink();
+    if (active) moveIndicator(active);
+  }, 200);
+
+  window.addEventListener('resize', () => {
+    const active = getActiveLink();
+    if (active) moveIndicator(active);
+  });
+
+  // Hover & Click magnetic dynamics
   links.forEach(l => {
-    l.addEventListener('click', (e) => {
+    l.addEventListener('mouseenter', () => {
+      moveIndicator(l);
+      luxuryAudio.playClick();
+    });
+
+    l.addEventListener('click', () => {
       links.forEach(lnk => lnk.classList.remove('active'));
       l.classList.add('active');
+      moveIndicator(l);
+      luxuryAudio.playGlassChime();
     });
   });
 
-  document.getElementById('cartTrigger')?.addEventListener('click', openCartDrawer);
-  document.getElementById('cartCloseBtn')?.addEventListener('click', closeCartDrawer);
+  navCapsule?.addEventListener('mouseleave', () => {
+    const active = getActiveLink();
+    if (active) moveIndicator(active);
+  });
+
+  // Laser Scroll Progress & Header Scrolled State
+  const onScroll = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    if (laserBar) {
+      laserBar.style.width = `${scrollPct}%`;
+    }
+
+    if (siteHeader) {
+      siteHeader.classList.toggle('scrolled', scrollTop > 40);
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Real-time Section Observer for Navigation
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          if (!id) return;
+          const matchingLink = document.querySelector(`.nav-link[href="#${id}"], .nav-link[data-section="${id}"]`);
+          if (matchingLink) {
+            links.forEach(lnk => lnk.classList.remove('active'));
+            matchingLink.classList.add('active');
+            moveIndicator(matchingLink);
+          }
+          
+          document.querySelectorAll('.mobile-nav-link').forEach(mLink => {
+            const isMatch = mLink.getAttribute('href') === `#${id}` || mLink.dataset.section === id;
+            mLink.classList.toggle('active', isMatch);
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('section[id]').forEach(sec => observer.observe(sec));
+  }
+
+  // Mobile Menu Drawer Handler
+  const mobileToggle = document.getElementById('mobileMenuToggle');
+  const mobileDrawer = document.getElementById('mobileNavDrawer');
+  const mobileBackdrop = document.getElementById('mobileNavBackdrop');
+  const mobileClose = document.getElementById('mobileNavClose');
+
+  const openMobileNav = () => {
+    mobileDrawer?.classList.add('open');
+    mobileBackdrop?.classList.add('open');
+    mobileToggle?.classList.add('active');
+    luxuryAudio.playGlassChime();
+  };
+
+  const closeMobileNav = () => {
+    mobileDrawer?.classList.remove('open');
+    mobileBackdrop?.classList.remove('open');
+    mobileToggle?.classList.remove('active');
+    luxuryAudio.playClick();
+  };
+
+  mobileToggle?.addEventListener('click', () => {
+    if (mobileDrawer?.classList.contains('open')) {
+      closeMobileNav();
+    } else {
+      openMobileNav();
+    }
+  });
+
+  mobileClose?.addEventListener('click', closeMobileNav);
+  mobileBackdrop?.addEventListener('click', closeMobileNav);
+
+  document.querySelectorAll('.mobile-nav-link').forEach(mLink => {
+    mLink.addEventListener('click', () => {
+      closeMobileNav();
+      luxuryAudio.playGlassChime();
+    });
+  });
+
+  // Cart Drawer Triggers
+  document.getElementById('cartTrigger')?.addEventListener('click', () => {
+    openCartDrawer();
+    luxuryAudio.playGlassChime();
+  });
+  document.getElementById('cartCloseBtn')?.addEventListener('click', () => {
+    closeCartDrawer();
+    luxuryAudio.playClick();
+  });
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
 }
 
