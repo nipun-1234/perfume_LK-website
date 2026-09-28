@@ -1394,7 +1394,9 @@ body {
 .review-stars svg,
 .review-stars .lucide-icon,
 .review-stars [data-lucide="star"],
-.review-stars polygon {
+.review-stars [data-lucide="star-half"],
+.review-stars polygon,
+.review-stars path {
   width: 17px;
   height: 17px;
   fill: #F5D061 !important;
