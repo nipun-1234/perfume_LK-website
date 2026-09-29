@@ -9,7 +9,20 @@ Perfume.lk blends cinematic 3D visuals with a luxury-inspired interface to reima
 
 ---
 
+## 🌟 Key Features
 
+- 🧴 **Interactive 3D Perfume Bottle** — high-poly crystal bottle with realistic glass refraction, 360° drag rotation, and mouse parallax
+- ✨ **Real-Time Bottle Customization** — live fragrance blend, liquid tint, and bottle size (50ml / 100ml) changes
+- 🎨 **Custom Cap Finishes** — Brushed Gold, Obsidian Onyx, Rose Gold, and Chrome
+- ✍️ **Personalized Engraving** — live canvas-texture name engraving on the bottle glass
+- 💨 **Interactive Spray Effects** — 3D particle mist bursts with velocity/dissipation physics and synced audio
+- 🌿 **Scent Pyramid & Ingredient Explorer** — interactive Top / Heart / Base notes with Sri Lankan botanicals (Ceylon Cinnamon, Blue Lotus, Sandalwood)
+- 🎯 **Bespoke Scent Finder Quiz** — a 3-step sensory quiz matching personality to a signature Ceylon blend
+- 🛍️ **Haute Collection & Shopping Cart** — filterable catalog, quick 3D preview, slide-out cart, and coupon support
+- 💱 **Dual Currency** — instant LKR ⇄ USD toggle
+- 🔊 **Web Audio Sensory Feedback** — synthesized spray mist, glass chime, and luxury click sounds (no external audio assets)
+- 📱 **Fully Responsive** — optimized for desktop, tablet, and mobile
+- ⚡ **Optimized WebGL Performance** — built for a smooth 60fps experience
 
 ---
 
