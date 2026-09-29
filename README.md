@@ -1,8 +1,4 @@
-# 🌸 Perfume.lk — Luxury 3D Fragrance Experience
 
-**Perfume.lk** is a world-class, high-performance 3D web experience for Sri Lanka's premier luxury haute perfumery house. It showcases Ceylon's finest artisanal fragrances through real-time WebGL visuals, interactive bottle customization, an immersive scent-notes explorer, a bespoke scent finder, and a refined shopping experience.
-
----
 
 ## ✨ Overview
 
