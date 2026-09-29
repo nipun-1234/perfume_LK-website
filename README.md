@@ -163,11 +163,4 @@ npm run build
 
 ---
 
-## 📜 License
 
-This project is proprietary to Perfume.lk. All rights reserved.
-Developed By Nipun Sudusinghe.
-
----
-
-<p align="center">Crafted with ✨ for the art of Ceylon fragrance.</p>
